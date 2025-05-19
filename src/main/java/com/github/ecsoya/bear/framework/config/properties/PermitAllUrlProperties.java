@@ -3,8 +3,6 @@ package com.github.ecsoya.bear.framework.config.properties;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.RegExUtils;
@@ -54,14 +52,14 @@ public class PermitAllUrlProperties implements InitializingBean, ApplicationCont
 				Anonymous method = AnnotationUtils.findAnnotation(handlerMethod.getMethod(), Anonymous.class);
 				Anonymous controller = AnnotationUtils.findAnnotation(handlerMethod.getBeanType(), Anonymous.class);
 
-				if (method != null || controller != null) {
+				if (info.getPatternsCondition() != null && (method != null || controller != null)) {
 					log.debug("发现 @Anonymous 注解: {}.{}", className, methodName);
 					info.getPatternsCondition().getPatterns().forEach(url -> {
 						try {
 							log.debug("处理URL: {}", url);
 							String normalizedUrl = normalizeUrl(url);
 							log.debug("规范化后的URL: {}", normalizedUrl);
-							
+
 							if (isValidPath(normalizedUrl)) {
 								urls.add(normalizedUrl);
 								log.info("添加匿名访问路径: {}", normalizedUrl);
@@ -74,11 +72,11 @@ public class PermitAllUrlProperties implements InitializingBean, ApplicationCont
 					});
 				}
 			});
-			
+
 			log.info("=== 匿名访问URL收集完成 ===");
 			log.info("共收集到 {} 个路径:", urls.size());
 			urls.forEach(url -> log.info("- {}", url));
-			
+
 		} catch (Exception e) {
 			log.error("收集匿名访问URL时发生错误", e);
 		}
@@ -89,33 +87,33 @@ public class PermitAllUrlProperties implements InitializingBean, ApplicationCont
 			log.debug("URL为空，返回根路径");
 			return "/";
 		}
-		
+
 		log.debug("开始规范化URL: {}", url);
-		
+
 		// 替换路径变量为通配符
 		String normalized = RegExUtils.replaceAll(url, PATTERN, ASTERISK);
 		log.debug("替换路径变量后: {}", normalized);
-		
+
 		// 确保路径以 / 开头
 		if (!normalized.startsWith("/")) {
 			normalized = "/" + normalized;
 			log.debug("添加前导斜杠后: {}", normalized);
 		}
-		
+
 		// 移除多余的斜杠
 		normalized = normalized.replaceAll("//+", "/");
 		log.debug("移除多余斜杠后: {}", normalized);
-		
+
 		// 处理连续的星号
 		normalized = normalized.replaceAll("\\*+", "*");
 		log.debug("处理连续星号后: {}", normalized);
-		
+
 		// 确保路径不以 / 结尾（除非是根路径）
 		if (normalized.length() > 1 && normalized.endsWith("/")) {
 			normalized = normalized.substring(0, normalized.length() - 1);
 			log.debug("移除尾部斜杠后: {}", normalized);
 		}
-		
+
 		return normalized;
 	}
 
@@ -124,30 +122,27 @@ public class PermitAllUrlProperties implements InitializingBean, ApplicationCont
 			log.debug("路径为空，无效");
 			return false;
 		}
-		
+
 		try {
 			log.debug("开始验证路径: {}", path);
-			
+
 			// 使用 AntPathRequestMatcher 验证路径
 			AntPathRequestMatcher matcher = new AntPathRequestMatcher(path);
 			String pattern = matcher.getPattern();
 			log.debug("AntPathRequestMatcher模式: {}", pattern);
-			
+
 			// 检查路径是否包含非法模式
-			if (pattern.contains("/**/") || 
-				pattern.contains("{*") || 
-				pattern.contains("**")) {
+			if (pattern.contains("/**/") || pattern.contains("{*") || pattern.contains("**")) {
 				log.debug("路径包含非法模式");
 				return false;
 			}
-			
+
 			// 检查路径变量格式
-			if (pattern.contains("{") && 
-				!pattern.matches(".*\\{[a-zA-Z0-9_]+\\}.*")) {
+			if (pattern.contains("{") && !pattern.matches(".*\\{[a-zA-Z0-9_]+\\}.*")) {
 				log.debug("路径变量格式不正确");
 				return false;
 			}
-			
+
 			log.debug("路径验证通过");
 			return true;
 		} catch (Exception e) {

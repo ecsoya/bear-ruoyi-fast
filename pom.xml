@@ -5,7 +5,7 @@
 
     <groupId>com.github.ecsoya.bear</groupId>
     <artifactId>bear-ruoyi-fast</artifactId>
-    <version>1.0.0</version>
+    <version>v1.0.0</version>
     <packaging>jar</packaging>
 
     <name>bear-ruoyi-fast</name>
@@ -22,8 +22,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>17</java.version>
-        <maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
-        <pagehelper.spring.boot.starter.version>1.4.7</pagehelper.spring.boot.starter.version>
+        <maven-jar-plugin.version>3.4.1</maven-jar-plugin.version>
+        <pagehelper.spring.boot.starter.version>2.1.0</pagehelper.spring.boot.starter.version>
         <fastjson.version>2.0.53</fastjson.version>
         <druid.version>1.2.23</druid.version>
         <commons.io.version>2.19.0</commons.io.version>
@@ -39,6 +39,7 @@
         <logback.version>1.4.14</logback.version>
         <spring-security.version>6.1.2</spring-security.version>
         <spring-framework.version>6.0.13</spring-framework.version>
+        <mybatis-spring-boot-starter.version>3.0.3</mybatis-spring-boot-starter.version>
     </properties>
 
     <dependencies>
@@ -212,6 +213,13 @@
                     <groupId>javax.servlet</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <!-- MyBatis Spring Boot Starter -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>${mybatis-spring-boot-starter.version}</version>
         </dependency>
 
 	</dependencies>
