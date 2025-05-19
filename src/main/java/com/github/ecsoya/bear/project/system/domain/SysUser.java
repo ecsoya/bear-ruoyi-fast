@@ -3,10 +3,6 @@ package com.github.ecsoya.bear.project.system.domain;
 import java.util.Date;
 import java.util.List;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
@@ -16,6 +12,10 @@ import com.github.ecsoya.bear.framework.aspectj.lang.annotation.Excel.ColumnType
 import com.github.ecsoya.bear.framework.aspectj.lang.annotation.Excel.Type;
 import com.github.ecsoya.bear.framework.aspectj.lang.annotation.Excels;
 import com.github.ecsoya.bear.framework.web.domain.BaseEntity;
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 /**
  * 用户对象 sys_user
@@ -90,6 +90,8 @@ public class SysUser extends BaseEntity {
 
 	/** 角色ID */
 	private Long roleId;
+
+	private String userType;
 
 	public SysUser() {
 
@@ -269,5 +271,13 @@ public class SysUser extends BaseEntity {
 				.append("createBy", getCreateBy()).append("createTime", getCreateTime())
 				.append("updateBy", getUpdateBy()).append("updateTime", getUpdateTime()).append("remark", getRemark())
 				.append("dept", getDept()).toString();
+	}
+
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
 	}
 }

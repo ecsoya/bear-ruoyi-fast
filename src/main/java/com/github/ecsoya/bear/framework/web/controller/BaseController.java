@@ -63,6 +63,11 @@ public class BaseController {
 		}
 	}
 
+	protected void startOrderBy(String orderByValue) {
+		String orderBy = SqlUtil.escapeOrderBySql(orderByValue);
+		PageHelper.orderBy(orderBy);
+	}
+
 	/**
 	 * 清理分页的线程变量
 	 */

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 import com.github.ecsoya.bear.common.constant.HttpStatus;
+import com.github.ecsoya.bear.common.core.text.Convert;
 import com.github.ecsoya.bear.common.utils.StringUtils;
 
 /**
@@ -194,5 +195,17 @@ public class AjaxResult extends HashMap<String, Object> {
 	public AjaxResult put(String key, Object value) {
 		super.put(key, value);
 		return this;
+	}
+
+	public Object getData() {
+		return get(DATA_TAG);
+	}
+
+	public Object getMsg() {
+		return Convert.toStr(get(MSG_TAG));
+	}
+
+	public int getCode() {
+		return Convert.toInt(get(CODE_TAG), -1);
 	}
 }

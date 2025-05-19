@@ -1,22 +1,26 @@
 package com.github.ecsoya.bear.framework.security.service;
 
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
-import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtClaimsSet;
+import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.stereotype.Component;
 
 import com.github.ecsoya.bear.common.constant.CacheConstants;
@@ -28,8 +32,6 @@ import com.github.ecsoya.bear.common.utils.ip.IpUtils;
 import com.github.ecsoya.bear.common.utils.uuid.IdUtils;
 import com.github.ecsoya.bear.framework.redis.RedisCache;
 import com.github.ecsoya.bear.framework.security.LoginUser;
-
-import eu.bitwalker.useragentutils.UserAgent;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -37,12 +39,8 @@ import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
+import eu.bitwalker.useragentutils.UserAgent;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * token验证处理
@@ -80,9 +78,7 @@ public class TokenService {
 		RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
 
 		// 创建JWK
-		JWK jwk = new RSAKey.Builder(publicKey)
-				.privateKey(privateKey)
-				.build();
+		JWK jwk = new RSAKey.Builder(publicKey).privateKey(privateKey).build();
 		JWKSet jwkSet = new JWKSet(jwk);
 		JWKSource<SecurityContext> jwkSource = new ImmutableJWKSet<>(jwkSet);
 
@@ -179,15 +175,10 @@ public class TokenService {
 		claims.put(Constants.JWT_USERNAME, loginUser.getUsername());
 		claims.put(Constants.JWT_USERID, loginUser.getUserId());
 
-		JwtClaimsSet claimsSet = JwtClaimsSet.builder()
-				.subject(loginUser.getUsername())
-				.claims(c -> c.putAll(claims))
-				.issuedAt(now)
-				.expiresAt(expiryDate)
-				.build();
+		JwtClaimsSet claimsSet = JwtClaimsSet.builder().subject(loginUser.getUsername()).claims(c -> c.putAll(claims))
+				.issuedAt(now).expiresAt(expiryDate).build();
 
-		return jwtEncoder.encode(JwtEncoderParameters.from(claimsSet))
-				.getTokenValue();
+		return jwtEncoder.encode(JwtEncoderParameters.from(claimsSet)).getTokenValue();
 	}
 
 	/**
@@ -202,6 +193,23 @@ public class TokenService {
 		if (expireTime - currentTime <= MILLIS_MINUTE_TWENTY) {
 			refreshToken(loginUser);
 		}
+	}
+
+	public String getTokenByUserId(Long userId) {
+		if (userId == null) {
+			return null;
+		}
+		String key = getUserIdKey(userId);
+		return redisCache.getCacheObject(key);
+	}
+
+	private String getUserIdKey(Long userId) {
+		return String.format("login_user_id_token:%s", userId);
+	}
+
+	public void bindToken(Long userId, String token) {
+		String key = getUserIdKey(userId);
+		redisCache.setCacheObject(key, token, expireTime, TimeUnit.MINUTES);
 	}
 
 	/**
