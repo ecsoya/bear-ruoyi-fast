@@ -10,6 +10,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
+import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.stereotype.Component;
 
 import com.github.ecsoya.bear.common.constant.CacheConstants;
@@ -23,9 +30,19 @@ import com.github.ecsoya.bear.framework.redis.RedisCache;
 import com.github.ecsoya.bear.framework.security.LoginUser;
 
 import eu.bitwalker.useragentutils.UserAgent;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.nimbusds.jose.jwk.JWK;
+import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.RSAKey;
+import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
+import com.nimbusds.jose.jwk.source.JWKSource;
+import com.nimbusds.jose.proc.SecurityContext;
+
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 
 /**
  * token验证处理
@@ -40,10 +57,6 @@ public class TokenService {
 	@Value("${token.header}")
 	private String header;
 
-	// 令牌秘钥
-	@Value("${token.secret}")
-	private String secret;
-
 	// 令牌有效期（默认30分钟）
 	@Value("${token.expireTime}")
 	private int expireTime;
@@ -57,6 +70,37 @@ public class TokenService {
 	@Autowired
 	private RedisCache redisCache;
 
+	private final JwtEncoder jwtEncoder;
+	private final JwtDecoder jwtDecoder;
+
+	public TokenService() {
+		// 生成RSA密钥对
+		KeyPair keyPair = generateRsaKey();
+		RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
+		RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
+
+		// 创建JWK
+		JWK jwk = new RSAKey.Builder(publicKey)
+				.privateKey(privateKey)
+				.build();
+		JWKSet jwkSet = new JWKSet(jwk);
+		JWKSource<SecurityContext> jwkSource = new ImmutableJWKSet<>(jwkSet);
+
+		// 创建JWT编码器和解码器
+		this.jwtEncoder = new NimbusJwtEncoder(jwkSource);
+		this.jwtDecoder = NimbusJwtDecoder.withPublicKey(publicKey).build();
+	}
+
+	private KeyPair generateRsaKey() {
+		try {
+			KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+			keyPairGenerator.initialize(2048);
+			return keyPairGenerator.generateKeyPair();
+		} catch (Exception ex) {
+			throw new IllegalStateException("Error generating RSA key pair", ex);
+		}
+	}
+
 	/**
 	 * 获取用户身份信息
 	 * 
@@ -67,14 +111,22 @@ public class TokenService {
 		String token = getToken(request);
 		if (StringUtils.isNotEmpty(token)) {
 			try {
-				Claims claims = parseToken(token);
+				Jwt jwt = jwtDecoder.decode(token);
 				// 解析对应的权限以及用户信息
-				String uuid = (String) claims.get(Constants.LOGIN_USER_KEY);
+				String uuid = jwt.getClaimAsString(Constants.LOGIN_USER_KEY);
 				String userKey = getTokenKey(uuid);
 				LoginUser user = redisCache.getCacheObject(userKey);
-				return user;
+				if (user != null) {
+					// 验证token是否过期
+					Instant expiresAt = jwt.getExpiresAt();
+					if (expiresAt != null && expiresAt.isBefore(Instant.now())) {
+						log.warn("Token已过期: {}", token);
+						return null;
+					}
+					return user;
+				}
 			} catch (Exception e) {
-				log.error("获取用户信息异常'{}'", e.getMessage());
+				log.error("获取用户信息异常: {}", e.getMessage());
 			}
 		}
 		return null;
@@ -94,8 +146,16 @@ public class TokenService {
 	 */
 	public void delLoginUser(String token) {
 		if (StringUtils.isNotEmpty(token)) {
-			String userKey = getTokenKey(token);
-			redisCache.deleteObject(userKey);
+			try {
+				Jwt jwt = jwtDecoder.decode(token);
+				String uuid = jwt.getClaimAsString(Constants.LOGIN_USER_KEY);
+				if (uuid != null) {
+					String userKey = getTokenKey(uuid);
+					redisCache.deleteObject(userKey);
+				}
+			} catch (Exception e) {
+				log.error("删除用户信息异常: {}", e.getMessage());
+			}
 		}
 	}
 
@@ -111,10 +171,23 @@ public class TokenService {
 		setUserAgent(loginUser);
 		refreshToken(loginUser);
 
+		Instant now = Instant.now();
+		Instant expiryDate = now.plus(expireTime, ChronoUnit.MINUTES);
+
 		Map<String, Object> claims = new HashMap<>();
 		claims.put(Constants.LOGIN_USER_KEY, token);
 		claims.put(Constants.JWT_USERNAME, loginUser.getUsername());
-		return createToken(claims);
+		claims.put(Constants.JWT_USERID, loginUser.getUserId());
+
+		JwtClaimsSet claimsSet = JwtClaimsSet.builder()
+				.subject(loginUser.getUsername())
+				.claims(c -> c.putAll(claims))
+				.issuedAt(now)
+				.expiresAt(expiryDate)
+				.build();
+
+		return jwtEncoder.encode(JwtEncoderParameters.from(claimsSet))
+				.getTokenValue();
 	}
 
 	/**
@@ -159,35 +232,19 @@ public class TokenService {
 	}
 
 	/**
-	 * 从数据声明生成令牌
-	 *
-	 * @param claims 数据声明
-	 * @return 令牌
-	 */
-	private String createToken(Map<String, Object> claims) {
-		String token = Jwts.builder().setClaims(claims).signWith(SignatureAlgorithm.HS512, secret).compact();
-		return token;
-	}
-
-	/**
-	 * 从令牌中获取数据声明
-	 *
-	 * @param token 令牌
-	 * @return 数据声明
-	 */
-	private Claims parseToken(String token) {
-		return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
-	}
-
-	/**
 	 * 从令牌中获取用户名
 	 *
 	 * @param token 令牌
 	 * @return 用户名
 	 */
 	public String getUsernameFromToken(String token) {
-		Claims claims = parseToken(token);
-		return claims.getSubject();
+		try {
+			Jwt jwt = jwtDecoder.decode(token);
+			return jwt.getSubject();
+		} catch (Exception e) {
+			log.error("从令牌中获取用户名异常: {}", e.getMessage());
+			return null;
+		}
 	}
 
 	/**

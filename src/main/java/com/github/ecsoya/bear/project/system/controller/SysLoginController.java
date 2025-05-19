@@ -10,7 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.ecsoya.bear.common.constant.Constants;
+import com.github.ecsoya.bear.common.constant.HttpStatus;
+import com.github.ecsoya.bear.common.exception.ServiceException;
 import com.github.ecsoya.bear.common.utils.SecurityUtils;
+import com.github.ecsoya.bear.framework.aspectj.lang.annotation.Anonymous;
 import com.github.ecsoya.bear.framework.security.LoginBody;
 import com.github.ecsoya.bear.framework.security.LoginUser;
 import com.github.ecsoya.bear.framework.security.service.SysLoginService;
@@ -46,6 +49,7 @@ public class SysLoginController {
 	 * @param loginBody 登录信息
 	 * @return 结果
 	 */
+	@Anonymous
 	@PostMapping("/login")
 	public AjaxResult login(@RequestBody LoginBody loginBody) {
 		AjaxResult ajax = AjaxResult.success();
@@ -63,21 +67,30 @@ public class SysLoginController {
 	 */
 	@GetMapping("getInfo")
 	public AjaxResult getInfo() {
-		LoginUser loginUser = SecurityUtils.getLoginUser();
-		SysUser user = loginUser.getUser();
-		// 角色集合
-		Set<String> roles = permissionService.getRolePermission(user);
-		// 权限集合
-		Set<String> permissions = permissionService.getMenuPermission(user);
-		if (!loginUser.getPermissions().equals(permissions)) {
-			loginUser.setPermissions(permissions);
-			tokenService.refreshToken(loginUser);
+		try {
+			LoginUser loginUser = SecurityUtils.getLoginUser();
+			if (loginUser == null) {
+				return AjaxResult.error(HttpStatus.UNAUTHORIZED, "用户未登录");
+			}
+			SysUser user = loginUser.getUser();
+			// 角色集合
+			Set<String> roles = permissionService.getRolePermission(user);
+			// 权限集合
+			Set<String> permissions = permissionService.getMenuPermission(user);
+			if (!loginUser.getPermissions().equals(permissions)) {
+				loginUser.setPermissions(permissions);
+				tokenService.refreshToken(loginUser);
+			}
+			AjaxResult ajax = AjaxResult.success();
+			ajax.put("user", user);
+			ajax.put("roles", roles);
+			ajax.put("permissions", permissions);
+			return ajax;
+		} catch (ServiceException e) {
+			return AjaxResult.error(HttpStatus.UNAUTHORIZED, e.getMessage());
+		} catch (Exception e) {
+			return AjaxResult.error(HttpStatus.UNAUTHORIZED, "获取用户信息异常");
 		}
-		AjaxResult ajax = AjaxResult.success();
-		ajax.put("user", user);
-		ajax.put("roles", roles);
-		ajax.put("permissions", permissions);
-		return ajax;
 	}
 
 	/**
@@ -87,8 +100,14 @@ public class SysLoginController {
 	 */
 	@GetMapping("getRouters")
 	public AjaxResult getRouters() {
-		Long userId = SecurityUtils.getUserId();
-		List<SysMenu> menus = menuService.selectMenuTreeByUserId(userId);
-		return AjaxResult.success(menuService.buildMenus(menus));
+		try {
+			Long userId = SecurityUtils.getUserId();
+			List<SysMenu> menus = menuService.selectMenuTreeByUserId(userId);
+			return AjaxResult.success(menuService.buildMenus(menus));
+		} catch (ServiceException e) {
+			return AjaxResult.error(HttpStatus.UNAUTHORIZED, e.getMessage());
+		} catch (Exception e) {
+			return AjaxResult.error(HttpStatus.UNAUTHORIZED, "获取路由信息异常");
+		}
 	}
 }

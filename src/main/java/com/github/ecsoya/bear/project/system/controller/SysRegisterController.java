@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.ecsoya.bear.common.utils.StringUtils;
+import com.github.ecsoya.bear.framework.aspectj.lang.annotation.Anonymous;
 import com.github.ecsoya.bear.framework.security.RegisterBody;
 import com.github.ecsoya.bear.framework.security.service.SysRegisterService;
 import com.github.ecsoya.bear.framework.web.controller.BaseController;
@@ -25,6 +26,7 @@ public class SysRegisterController extends BaseController {
 	@Autowired
 	private ISysConfigService configService;
 
+	@Anonymous
 	@PostMapping("/register")
 	public AjaxResult register(@RequestBody RegisterBody user) {
 		if (!("true".equals(configService.selectConfigByKey("sys.account.registerUser")))) {

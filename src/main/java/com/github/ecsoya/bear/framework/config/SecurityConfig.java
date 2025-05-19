@@ -1,5 +1,7 @@
 package com.github.ecsoya.bear.framework.config;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.filter.CorsFilter;
 
 import com.github.ecsoya.bear.framework.config.properties.PermitAllUrlProperties;
@@ -30,6 +33,8 @@ import com.github.ecsoya.bear.framework.security.handle.LogoutSuccessHandlerImpl
 @EnableMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @Configuration
 public class SecurityConfig {
+	private static final Logger log = LoggerFactory.getLogger(SecurityConfig.class);
+
 	/**
 	 * 自定义用户认证逻辑
 	 */
@@ -87,35 +92,72 @@ public class SecurityConfig {
 	 */
 	@Bean
 	protected SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+		log.info("初始化安全配置...");
 		return httpSecurity
 				// CSRF禁用，因为不使用session
-				.csrf(csrf -> csrf.disable())
+				.csrf(csrf -> {
+					csrf.disable();
+					log.debug("CSRF保护已禁用");
+				})
 				// 禁用HTTP响应标头
 				.headers((headersCustomizer) -> {
 					headersCustomizer.cacheControl(cache -> cache.disable())
 							.frameOptions(options -> options.sameOrigin());
+					log.debug("HTTP响应头已配置");
 				})
 				// 认证失败处理类
-				.exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
+				.exceptionHandling(exception -> {
+					exception.authenticationEntryPoint(unauthorizedHandler);
+					log.debug("认证失败处理器已配置");
+				})
 				// 基于token，所以不需要session
-				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-				// 注解标记允许匿名访问的url
-				.authorizeHttpRequests((requests) -> {
-					permitAllUrl.getUrls().forEach(url -> requests.requestMatchers(url).permitAll());
-					// 对于登录login 注册register 验证码captchaImage 允许匿名访问
-					requests.requestMatchers("/login", "/register", "/captchaImage").permitAll()
-							// 静态资源，可匿名访问
-							.requestMatchers(HttpMethod.GET, "/", "/*.html", "/**/*.html", "/**/*.css", "/**/*.js",
-									"/profile/**")
-							.permitAll()
-							.requestMatchers("/swagger-ui.html", "/swagger-resources/**", "/webjars/**", "/*/api-docs",
-									"/druid/**")
-							.permitAll()
-							// 除上面外的所有请求全部需要鉴权认证
-							.anyRequest().authenticated();
+				.sessionManagement(session -> {
+					session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+					log.debug("会话管理已配置为无状态");
+				}).authorizeHttpRequests((requests) -> {
+					log.info("配置请求授权规则...");
+
+					// 1. 硬编码允许匿名访问的路径
+					requests.requestMatchers(new AntPathRequestMatcher("/login"),
+							new AntPathRequestMatcher("/register"), new AntPathRequestMatcher("/captchaImage"),
+							new AntPathRequestMatcher("/swagger-ui/**"), new AntPathRequestMatcher("/v3/api-docs/**"),
+							new AntPathRequestMatcher("/webjars/**"), new AntPathRequestMatcher("/druid/**"),
+							new AntPathRequestMatcher("/error")).permitAll();
+					log.debug("已配置基础匿名访问路径");
+
+					// 2. 静态资源允许匿名访问
+					requests.requestMatchers(HttpMethod.GET, "/",
+//							"/*.html",
+//							"/**/*.html",
+//							"/**/*.css",
+//							"/**/*.js",
+							"/profile/**").permitAll();
+					log.debug("已配置静态资源访问规则");
+
+					// 3. 动态加载的URL（添加路径校验）
+					permitAllUrl.getUrls().forEach(url -> {
+						if (url != null && !url.contains("/**/") && !url.contains("{*")) {
+							try {
+								AntPathRequestMatcher matcher = new AntPathRequestMatcher(url);
+								log.debug("允许匿名访问路径: {}", url);
+								requests.requestMatchers(matcher).permitAll();
+							} catch (Exception e) {
+								log.warn("跳过非法路径模式: {}, 原因: {}", url, e.getMessage());
+							}
+						} else {
+							log.warn("跳过非法路径模式: {}", url);
+						}
+					});
+
+					// 4. 其他所有请求需要认证
+					requests.anyRequest().authenticated();
+					log.info("请求授权规则配置完成");
 				})
 				// 添加Logout filter
-				.logout(logout -> logout.logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler))
+				.logout(logout -> {
+					logout.logoutUrl("/logout").logoutSuccessHandler(logoutSuccessHandler);
+					log.debug("登出处理器已配置");
+				})
 				// 添加JWT filter
 				.addFilterBefore(authenticationTokenFilter, UsernamePasswordAuthenticationFilter.class)
 				// 添加CORS filter
@@ -128,6 +170,7 @@ public class SecurityConfig {
 	 */
 	@Bean
 	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+		log.debug("初始化密码编码器");
 		return new BCryptPasswordEncoder();
 	}
 }
