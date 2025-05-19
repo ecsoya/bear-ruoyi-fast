@@ -14,7 +14,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.2</version>
+        <version>3.2.12</version>
         <relativePath />
     </parent>
 
@@ -37,8 +37,6 @@
         <!-- override dependency version -->
         <tomcat.version>10.1.19</tomcat.version>
         <logback.version>1.4.14</logback.version>
-        <spring-security.version>6.1.2</spring-security.version>
-        <spring-framework.version>6.0.13</spring-framework.version>
         <mybatis-spring-boot-starter.version>3.0.3</mybatis-spring-boot-starter.version>
     </properties>
 
