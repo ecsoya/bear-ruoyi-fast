@@ -2,7 +2,7 @@
 spring:
     datasource:
         type: com.alibaba.druid.pool.DruidDataSource
-        driverClassName: com.mysql.cj.jdbc.Driver
+        driver-class-name: com.mysql.cj.jdbc.Driver
         druid:
             # 主库数据源
             master:
@@ -17,31 +17,31 @@ spring:
                 username: 
                 password: 
             # 初始连接数
-            initialSize: 5
+            initial-size: 5
             # 最小连接池数量
-            minIdle: 10
+            min-idle: 10
             # 最大连接池数量
-            maxActive: 20
+            max-active: 20
             # 配置获取连接等待超时的时间
-            maxWait: 60000
+            max-wait: 60000
             # 配置连接超时时间
-            connectTimeout: 30000
+            connect-timeout: 30000
             # 配置网络超时时间
-            socketTimeout: 60000
+            socket-timeout: 60000
             # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
-            timeBetweenEvictionRunsMillis: 60000
+            time-between-eviction-runs-millis: 60000
             # 配置一个连接在池中最小生存的时间，单位是毫秒
-            minEvictableIdleTimeMillis: 300000
+            min-evictable-idle-time-millis: 300000
             # 配置一个连接在池中最大生存的时间，单位是毫秒
-            maxEvictableIdleTimeMillis: 900000
+            max-evictable-idle-time-millis: 900000
             # 配置检测连接是否有效
-            validationQuery: SELECT 1 FROM DUAL
-            testWhileIdle: true
-            testOnBorrow: false
-            testOnReturn: false
-            webStatFilter: 
+            validation-query: SELECT 1 FROM DUAL
+            test-while-idle: true
+            test-on-borrow: false
+            test-on-return: false
+            web-stat-filter: 
                 enabled: true
-            statViewServlet:
+            stat-view-servlet:
                 enabled: true
                 # 设置白名单，不填则允许所有访问
                 allow:
