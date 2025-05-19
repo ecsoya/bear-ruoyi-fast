@@ -16,7 +16,7 @@ import com.github.ecsoya.bear.framework.web.domain.BaseEntity;
 /**
  * 部门表 sys_dept
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class SysDept extends BaseEntity {
 	private static final long serialVersionUID = 1L;

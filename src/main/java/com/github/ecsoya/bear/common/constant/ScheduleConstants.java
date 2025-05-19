@@ -3,7 +3,7 @@ package com.github.ecsoya.bear.common.constant;
 /**
  * 任务调度通用常量
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class ScheduleConstants {
 	public static final String TASK_CLASS_NAME = "TASK_CLASS_NAME";

@@ -8,7 +8,7 @@ import org.springframework.lang.Nullable;
 /**
  * 请求方式
  *
- * @author ruoyi
+ * @author bearfast_ry
  */
 public enum HttpMethod {
 	GET, HEAD, POST, PUT, PATCH, DELETE, OPTIONS, TRACE;

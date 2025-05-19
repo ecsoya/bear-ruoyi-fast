@@ -7,7 +7,7 @@ import com.github.ecsoya.bear.project.system.domain.SysPost;
 /**
  * 岗位信息 数据层
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public interface SysPostMapper {
 	/**

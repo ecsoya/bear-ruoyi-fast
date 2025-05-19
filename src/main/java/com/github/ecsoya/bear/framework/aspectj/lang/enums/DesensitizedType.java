@@ -7,7 +7,7 @@ import com.github.ecsoya.bear.common.utils.DesensitizedUtil;
 /**
  * 脱敏类型
  *
- * @author ruoyi
+ * @author bearfast_ry
  */
 public enum DesensitizedType {
 	/**

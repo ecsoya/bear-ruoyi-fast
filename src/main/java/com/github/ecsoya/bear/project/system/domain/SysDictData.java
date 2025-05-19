@@ -14,7 +14,7 @@ import com.github.ecsoya.bear.framework.web.domain.BaseEntity;
 /**
  * 字典数据表 sys_dict_data
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class SysDictData extends BaseEntity {
 	private static final long serialVersionUID = 1L;

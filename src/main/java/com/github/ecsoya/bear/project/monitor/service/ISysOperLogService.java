@@ -7,7 +7,7 @@ import com.github.ecsoya.bear.project.monitor.domain.SysOperLog;
 /**
  * 操作日志 服务层
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public interface ISysOperLogService {
 	/**

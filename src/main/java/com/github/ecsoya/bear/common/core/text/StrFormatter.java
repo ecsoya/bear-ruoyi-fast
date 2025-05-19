@@ -5,7 +5,7 @@ import com.github.ecsoya.bear.common.utils.StringUtils;
 /**
  * 字符串格式化
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class StrFormatter {
 	public static final String EMPTY_JSON = "{}";

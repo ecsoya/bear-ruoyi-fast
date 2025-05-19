@@ -3,7 +3,7 @@ package com.github.ecsoya.bear.common.utils.uuid;
 /**
  * ID生成器工具类
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class IdUtils {
 	/**

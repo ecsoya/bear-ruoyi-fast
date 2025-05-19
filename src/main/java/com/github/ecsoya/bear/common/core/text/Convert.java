@@ -15,7 +15,7 @@ import com.github.ecsoya.bear.common.utils.StringUtils;
 /**
  * 类型转换器
  *
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class Convert {
 	/**

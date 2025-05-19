@@ -23,7 +23,7 @@ import com.github.ecsoya.bear.project.monitor.service.ISysJobService;
 /**
  * 定时任务调度信息 服务层
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @Service
 public class SysJobServiceImpl implements ISysJobService {

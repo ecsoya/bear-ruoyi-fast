@@ -14,7 +14,7 @@ import com.github.ecsoya.bear.framework.web.domain.BaseEntity;
 /**
  * 业务表 gen_table
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class GenTable extends BaseEntity {
 	private static final long serialVersionUID = 1L;

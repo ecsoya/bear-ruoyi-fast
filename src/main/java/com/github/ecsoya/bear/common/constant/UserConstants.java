@@ -3,7 +3,7 @@ package com.github.ecsoya.bear.common.constant;
 /**
  * 用户常量信息
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class UserConstants {
 	/**

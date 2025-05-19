@@ -27,7 +27,7 @@ import com.github.ecsoya.bear.project.monitor.domain.SysCache;
 /**
  * 缓存监控
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @RestController
 @RequestMapping("/monitor/cache")

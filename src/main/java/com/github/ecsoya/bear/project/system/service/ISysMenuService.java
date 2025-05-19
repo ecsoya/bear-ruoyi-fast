@@ -10,7 +10,7 @@ import com.github.ecsoya.bear.project.system.domain.vo.RouterVo;
 /**
  * 菜单 业务层
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public interface ISysMenuService {
 	/**

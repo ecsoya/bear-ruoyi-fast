@@ -15,7 +15,7 @@ import com.github.ecsoya.bear.common.utils.StringUtils;
 /**
  * spring工具类 方便在非spring管理环境中获取bean
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @Component
 public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationContextAware {

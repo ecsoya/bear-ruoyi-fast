@@ -7,7 +7,7 @@ import com.google.code.kaptcha.text.impl.DefaultTextCreator;
 /**
  * 验证码文本生成器
  *
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class KaptchaTextCreator extends DefaultTextCreator {
 	private static final String[] CNUMBERS = "0,1,2,3,4,5,6,7,8,9,10".split(",");

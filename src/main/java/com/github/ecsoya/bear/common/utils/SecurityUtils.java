@@ -18,7 +18,7 @@ import com.github.ecsoya.bear.project.system.domain.SysRole;
 /**
  * 安全服务工具类
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class SecurityUtils {
 	/**

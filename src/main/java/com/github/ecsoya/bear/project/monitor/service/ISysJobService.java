@@ -10,7 +10,7 @@ import com.github.ecsoya.bear.project.monitor.domain.SysJob;
 /**
  * 定时任务调度信息信息 服务层
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public interface ISysJobService {
 	/**

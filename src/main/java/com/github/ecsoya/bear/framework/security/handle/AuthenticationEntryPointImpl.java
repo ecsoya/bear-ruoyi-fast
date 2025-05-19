@@ -19,7 +19,7 @@ import com.github.ecsoya.bear.framework.web.domain.AjaxResult;
 /**
  * 认证失败处理类 返回未授权
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @Component
 public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint, Serializable {

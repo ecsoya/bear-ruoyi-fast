@@ -9,7 +9,7 @@ import com.github.ecsoya.bear.project.system.domain.SysDept;
 /**
  * 部门管理 数据层
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public interface SysDeptMapper {
 	/**

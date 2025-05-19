@@ -27,7 +27,7 @@ import com.github.ecsoya.bear.framework.web.domain.AjaxResult;
 /**
  * 通用请求处理
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @RestController
 @RequestMapping("/common")

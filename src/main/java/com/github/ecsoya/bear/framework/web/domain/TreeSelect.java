@@ -13,7 +13,7 @@ import com.github.ecsoya.bear.project.system.domain.SysMenu;
 /**
  * Treeselect树结构实体类
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class TreeSelect implements Serializable {
 	private static final long serialVersionUID = 1L;

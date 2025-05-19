@@ -3,7 +3,7 @@ package com.github.ecsoya.bear.framework.aspectj.lang.enums;
 /**
  * 限流类型
  *
- * @author ruoyi
+ * @author bearfast_ry
  */
 
 public enum LimitType {

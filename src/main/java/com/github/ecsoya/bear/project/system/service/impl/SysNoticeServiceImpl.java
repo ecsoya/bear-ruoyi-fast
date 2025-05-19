@@ -12,7 +12,7 @@ import com.github.ecsoya.bear.project.system.service.ISysNoticeService;
 /**
  * 公告 服务层实现
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @Service
 public class SysNoticeServiceImpl implements ISysNoticeService {

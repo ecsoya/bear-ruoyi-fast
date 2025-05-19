@@ -22,7 +22,7 @@ import com.github.ecsoya.bear.project.monitor.domain.SysJob;
 /**
  * 定时任务工具类
  * 
- * @author ruoyi
+ * @author bearfast_ry
  *
  */
 public class ScheduleUtils {

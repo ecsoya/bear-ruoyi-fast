@@ -17,7 +17,7 @@ import com.github.ecsoya.bear.common.utils.StringUtils;
 /**
  * Repeatable 过滤器
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class RepeatableFilter implements Filter {
 	@Override

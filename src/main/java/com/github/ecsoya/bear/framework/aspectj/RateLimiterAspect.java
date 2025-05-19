@@ -24,7 +24,7 @@ import com.github.ecsoya.bear.framework.aspectj.lang.enums.LimitType;
 /**
  * 限流处理
  *
- * @author ruoyi
+ * @author bearfast_ry
  */
 @Aspect
 @Component

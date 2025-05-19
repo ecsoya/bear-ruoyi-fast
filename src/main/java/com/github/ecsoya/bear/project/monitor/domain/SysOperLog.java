@@ -10,7 +10,7 @@ import com.github.ecsoya.bear.framework.web.domain.BaseEntity;
 /**
  * 操作日志记录表 oper_log
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class SysOperLog extends BaseEntity {
 	private static final long serialVersionUID = 1L;

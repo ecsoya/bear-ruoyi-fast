@@ -9,7 +9,7 @@ import com.github.ecsoya.bear.project.system.domain.SysMenu;
 /**
  * 菜单表 数据层
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public interface SysMenuMapper {
 	/**

@@ -38,7 +38,7 @@ import com.github.ecsoya.bear.project.system.service.ISysUserService;
 /**
  * 用户信息
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @RestController
 @RequestMapping("/system/user")

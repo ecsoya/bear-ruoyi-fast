@@ -9,7 +9,7 @@ import com.github.ecsoya.bear.common.utils.ServletUtils;
 /**
  * 服务相关配置
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @Component
 public class ServerConfig {

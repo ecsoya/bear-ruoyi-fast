@@ -3,7 +3,7 @@ package com.github.ecsoya.bear.common.exception.job;
 /**
  * 计划策略异常
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class TaskException extends Exception {
 	private static final long serialVersionUID = 1L;

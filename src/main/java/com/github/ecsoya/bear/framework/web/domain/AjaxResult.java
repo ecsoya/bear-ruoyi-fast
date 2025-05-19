@@ -9,7 +9,7 @@ import com.github.ecsoya.bear.common.utils.StringUtils;
 /**
  * 操作消息提醒
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class AjaxResult extends HashMap<String, Object> {
 	private static final long serialVersionUID = 1L;

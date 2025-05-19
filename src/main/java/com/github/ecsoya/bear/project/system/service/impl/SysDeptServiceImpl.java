@@ -26,7 +26,7 @@ import com.github.ecsoya.bear.project.system.service.ISysDeptService;
 /**
  * 部门管理 服务实现
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @Service
 public class SysDeptServiceImpl implements ISysDeptService {

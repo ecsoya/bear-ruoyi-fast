@@ -18,7 +18,7 @@ import com.github.ecsoya.bear.project.system.domain.SysUser;
 /**
  * 登录密码方法
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @Component
 public class SysPasswordService {

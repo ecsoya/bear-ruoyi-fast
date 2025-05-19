@@ -6,7 +6,7 @@ import com.github.ecsoya.bear.common.utils.StringUtils;
 /**
  * sql操作工具类
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class SqlUtil {
 	/**

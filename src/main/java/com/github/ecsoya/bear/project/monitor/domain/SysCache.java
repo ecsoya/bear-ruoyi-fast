@@ -5,7 +5,7 @@ import com.github.ecsoya.bear.common.utils.StringUtils;
 /**
  * 缓存信息
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class SysCache {
 	/** 缓存名称 */

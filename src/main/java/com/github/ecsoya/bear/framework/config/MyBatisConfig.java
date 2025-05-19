@@ -30,7 +30,7 @@ import com.github.ecsoya.bear.common.utils.StringUtils;
 /**
  * Mybatis支持*匹配扫描包
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @Configuration
 public class MyBatisConfig {

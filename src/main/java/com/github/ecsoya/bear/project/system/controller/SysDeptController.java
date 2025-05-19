@@ -27,7 +27,7 @@ import com.github.ecsoya.bear.project.system.service.ISysDeptService;
 /**
  * 部门信息
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @RestController
 @RequestMapping("/system/dept")

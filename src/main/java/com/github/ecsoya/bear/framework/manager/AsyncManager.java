@@ -10,7 +10,7 @@ import com.github.ecsoya.bear.common.utils.spring.SpringUtils;
 /**
  * 异步任务管理器
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class AsyncManager {
 	/**

@@ -18,7 +18,7 @@ import com.github.ecsoya.bear.common.utils.html.EscapeUtil;
 /**
  * XSS过滤处理
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 	/**

@@ -26,7 +26,7 @@ import com.github.pagehelper.PageInfo;
 /**
  * web层通用数据处理
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class BaseController {
 	protected final Logger logger = LoggerFactory.getLogger(this.getClass());

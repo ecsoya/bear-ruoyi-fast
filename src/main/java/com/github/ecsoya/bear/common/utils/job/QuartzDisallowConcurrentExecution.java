@@ -8,7 +8,7 @@ import com.github.ecsoya.bear.project.monitor.domain.SysJob;
 /**
  * 定时任务处理（禁止并发执行）
  * 
- * @author ruoyi
+ * @author bearfast_ry
  *
  */
 @DisallowConcurrentExecution

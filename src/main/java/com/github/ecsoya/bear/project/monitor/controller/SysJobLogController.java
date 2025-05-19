@@ -25,7 +25,7 @@ import com.github.ecsoya.bear.project.monitor.service.ISysJobLogService;
 /**
  * 调度日志操作处理
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @RestController
 @RequestMapping("/monitor/jobLog")

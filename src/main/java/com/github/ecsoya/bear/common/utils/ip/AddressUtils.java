@@ -13,7 +13,7 @@ import com.github.ecsoya.bear.framework.config.GlobalConfig;
 /**
  * 获取地址类
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class AddressUtils {
 	private static final Logger log = LoggerFactory.getLogger(AddressUtils.class);

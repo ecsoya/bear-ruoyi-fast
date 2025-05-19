@@ -12,7 +12,7 @@ import com.github.ecsoya.bear.project.monitor.service.ISysOperLogService;
 /**
  * 操作日志 服务层处理
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @Service
 public class SysOperLogServiceImpl implements ISysOperLogService {

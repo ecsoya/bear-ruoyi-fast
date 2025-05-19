@@ -6,7 +6,7 @@ import com.github.ecsoya.bear.common.utils.ServletUtils;
 /**
  * 表格数据处理
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class TableSupport {
 	/**

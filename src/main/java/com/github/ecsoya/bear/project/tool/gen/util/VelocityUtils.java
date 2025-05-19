@@ -18,7 +18,7 @@ import com.github.ecsoya.bear.project.tool.gen.domain.GenTableColumn;
 /**
  * 模板处理工具类
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class VelocityUtils {
 	/** 项目空间路径 */

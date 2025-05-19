@@ -39,7 +39,7 @@ import com.github.ecsoya.bear.project.system.domain.SysUser;
 /**
  * 操作日志记录处理
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @Aspect
 @Component

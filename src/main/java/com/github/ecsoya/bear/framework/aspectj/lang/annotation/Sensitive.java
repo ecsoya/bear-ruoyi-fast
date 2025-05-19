@@ -13,7 +13,7 @@ import com.github.ecsoya.bear.framework.config.SensitiveJsonSerializer;
 /**
  * 数据脱敏注解
  *
- * @author ruoyi
+ * @author bearfast_ry
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

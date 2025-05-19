@@ -18,7 +18,7 @@ import com.github.ecsoya.bear.project.system.service.ISysUserService;
 /**
  * 用户验证处理
  *
- * @author ruoyi
+ * @author bearfast_ry
  */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

@@ -13,7 +13,7 @@ import com.github.ecsoya.bear.project.tool.gen.domain.GenTableColumn;
 /**
  * 代码生成器 工具类
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class GenUtils {
 	/**

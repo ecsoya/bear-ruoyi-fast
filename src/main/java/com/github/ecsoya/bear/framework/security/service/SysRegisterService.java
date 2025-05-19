@@ -22,7 +22,7 @@ import com.github.ecsoya.bear.project.system.service.ISysUserService;
 /**
  * 注册校验方法
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @Component
 public class SysRegisterService {

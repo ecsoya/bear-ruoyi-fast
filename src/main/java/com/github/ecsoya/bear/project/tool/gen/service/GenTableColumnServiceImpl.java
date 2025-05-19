@@ -12,7 +12,7 @@ import com.github.ecsoya.bear.project.tool.gen.mapper.GenTableColumnMapper;
 /**
  * 业务字段 服务层实现
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @Service
 public class GenTableColumnServiceImpl implements IGenTableColumnService {

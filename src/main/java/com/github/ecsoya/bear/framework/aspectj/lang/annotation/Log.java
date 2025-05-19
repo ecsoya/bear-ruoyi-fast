@@ -12,7 +12,7 @@ import com.github.ecsoya.bear.framework.aspectj.lang.enums.OperatorType;
 /**
  * 自定义操作日志记录注解
  * 
- * @author ruoyi
+ * @author bearfast_ry
  *
  */
 @Target({ ElementType.PARAMETER, ElementType.METHOD })

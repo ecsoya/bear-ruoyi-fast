@@ -7,7 +7,7 @@ import com.github.ecsoya.bear.project.system.domain.SysRole;
 /**
  * 角色表 数据层
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public interface SysRoleMapper {
 	/**

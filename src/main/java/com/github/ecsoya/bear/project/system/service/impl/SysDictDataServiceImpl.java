@@ -13,7 +13,7 @@ import com.github.ecsoya.bear.project.system.service.ISysDictDataService;
 /**
  * 字典 业务层处理
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @Service
 public class SysDictDataServiceImpl implements ISysDictDataService {

@@ -3,7 +3,7 @@ package com.github.ecsoya.bear.framework.aspectj.lang.enums;
 /**
  * 操作状态
  * 
- * @author ruoyi
+ * @author bearfast_ry
  *
  */
 public enum BusinessStatus {

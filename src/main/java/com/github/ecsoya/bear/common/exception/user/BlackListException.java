@@ -3,7 +3,7 @@ package com.github.ecsoya.bear.common.exception.user;
 /**
  * 黑名单IP异常类
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class BlackListException extends UserException {
 	private static final long serialVersionUID = 1L;

@@ -28,7 +28,7 @@ import com.github.ecsoya.bear.project.system.service.ISysDictTypeService;
 /**
  * 数据字典信息
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @RestController
 @RequestMapping("/system/dict/type")

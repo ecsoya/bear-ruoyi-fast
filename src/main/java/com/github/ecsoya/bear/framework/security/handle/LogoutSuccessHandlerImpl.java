@@ -24,7 +24,7 @@ import com.github.ecsoya.bear.framework.web.domain.AjaxResult;
 /**
  * 自定义退出处理类 返回成功
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @Configuration
 public class LogoutSuccessHandlerImpl implements LogoutSuccessHandler {

@@ -10,7 +10,7 @@ import com.github.ecsoya.bear.framework.web.domain.BaseEntity;
 /**
  * 系统访问记录表 sys_logininfor
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class SysLogininfor extends BaseEntity {
 	private static final long serialVersionUID = 1L;

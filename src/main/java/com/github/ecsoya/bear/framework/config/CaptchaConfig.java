@@ -26,7 +26,7 @@ import com.google.code.kaptcha.util.Config;
 /**
  * 验证码配置
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @Configuration
 public class CaptchaConfig {

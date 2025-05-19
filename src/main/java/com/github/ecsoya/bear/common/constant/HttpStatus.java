@@ -3,7 +3,7 @@ package com.github.ecsoya.bear.common.constant;
 /**
  * 返回状态码
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class HttpStatus {
 	/**

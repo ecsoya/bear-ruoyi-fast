@@ -17,7 +17,7 @@ import com.github.ecsoya.bear.framework.security.LoginUser;
 /**
  * 数据脱敏序列化过滤
  *
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class SensitiveJsonSerializer extends JsonSerializer<String> implements ContextualSerializer {
 	private DesensitizedType desensitizedType;

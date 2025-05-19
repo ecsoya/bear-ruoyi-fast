@@ -9,7 +9,7 @@ import com.github.ecsoya.bear.project.system.domain.SysUserRole;
 /**
  * 角色业务层
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public interface ISysRoleService {
 	/**

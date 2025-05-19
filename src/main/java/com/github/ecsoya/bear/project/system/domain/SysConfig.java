@@ -13,7 +13,7 @@ import com.github.ecsoya.bear.framework.web.domain.BaseEntity;
 /**
  * 参数配置表 sys_config
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class SysConfig extends BaseEntity {
 	private static final long serialVersionUID = 1L;

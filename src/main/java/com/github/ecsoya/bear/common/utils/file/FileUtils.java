@@ -25,7 +25,7 @@ import com.github.ecsoya.bear.framework.config.GlobalConfig;
 /**
  * 文件处理工具类
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class FileUtils {
 	public static String FILENAME_PATTERN = "[a-zA-Z0-9_\\-\\|\\.\\u4e00-\\u9fa5]+";

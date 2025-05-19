@@ -7,7 +7,7 @@ import com.github.ecsoya.bear.project.tool.gen.domain.GenTableColumn;
 /**
  * 业务字段 数据层
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public interface GenTableColumnMapper {
 	/**

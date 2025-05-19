@@ -3,7 +3,7 @@ package com.github.ecsoya.bear.framework.security;
 /**
  * 用户登录对象
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class LoginBody {
 	/**

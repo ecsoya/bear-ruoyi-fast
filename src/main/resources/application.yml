@@ -1,13 +1,13 @@
 # 项目相关配置
-ruoyi:
+global:
   # 名称
-  name: RuoYi
+  name: Bear Fast RuoYi
   # 版本
   version: 3.8.9
   # 版权年份
   copyrightYear: 2025
   # 文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
-  profile: D:/ruoyi/uploadPath
+  profile: data
   # 获取ip地址开关
   addressEnabled: false
   # 验证码类型 math 数字计算 char 字符验证
@@ -131,9 +131,9 @@ xss:
 # 代码生成
 gen:
   # 作者
-  author: ruoyi
+  author: angryred
   # 默认生成包路径 system 需改成自己的模块名称 如 system monitor tool
-  packageName: com.github.ecsoya.bear.project.system
+  packageName: com.github.ecsoya.bear.
   # 自动去除表前缀，默认是true
   autoRemovePre: false
   # 表前缀（生成类名不会包含表前缀，多个用逗号分隔）

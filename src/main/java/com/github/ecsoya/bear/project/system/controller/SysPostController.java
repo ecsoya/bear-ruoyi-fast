@@ -28,7 +28,7 @@ import com.github.ecsoya.bear.project.system.service.ISysPostService;
 /**
  * 岗位信息操作处理
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @RestController
 @RequestMapping("/system/post")

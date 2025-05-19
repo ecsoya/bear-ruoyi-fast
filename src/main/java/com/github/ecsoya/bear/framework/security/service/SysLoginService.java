@@ -34,7 +34,7 @@ import com.github.ecsoya.bear.project.system.service.ISysUserService;
 /**
  * 登录校验方法
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @Component
 public class SysLoginService {

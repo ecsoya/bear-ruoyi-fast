@@ -14,7 +14,7 @@ import com.github.ecsoya.bear.framework.web.domain.BaseEntity;
 /**
  * 岗位表 sys_post
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class SysPost extends BaseEntity {
 	private static final long serialVersionUID = 1L;

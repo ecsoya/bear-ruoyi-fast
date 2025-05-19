@@ -19,7 +19,7 @@ import com.github.ecsoya.bear.common.utils.StringUtils;
 /**
  * 防止XSS攻击的过滤器
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class XssFilter implements Filter {
 	/**

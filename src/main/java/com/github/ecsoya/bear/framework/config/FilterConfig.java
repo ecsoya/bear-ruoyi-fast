@@ -18,7 +18,7 @@ import com.github.ecsoya.bear.common.utils.StringUtils;
 /**
  * Filter配置
  *
- * @author ruoyi
+ * @author bearfast_ry
  */
 @Configuration
 public class FilterConfig {

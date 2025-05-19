@@ -9,7 +9,7 @@ import com.github.ecsoya.bear.common.constant.Constants;
 /**
  * VelocityEngine工厂
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class VelocityInitializer {
 	/**

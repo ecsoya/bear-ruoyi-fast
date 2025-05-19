@@ -24,7 +24,7 @@ import com.github.ecsoya.bear.project.system.service.ISysDictTypeService;
 /**
  * 字典 业务层处理
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @Service
 public class SysDictTypeServiceImpl implements ISysDictTypeService {

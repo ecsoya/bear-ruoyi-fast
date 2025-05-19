@@ -9,7 +9,7 @@ import com.github.ecsoya.bear.project.system.domain.SysDictData;
 /**
  * 字典表 数据层
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public interface SysDictDataMapper {
 	/**

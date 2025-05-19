@@ -30,7 +30,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 /**
  * token验证处理
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @Component
 public class TokenService {

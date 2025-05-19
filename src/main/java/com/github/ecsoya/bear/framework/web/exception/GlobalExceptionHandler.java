@@ -24,7 +24,7 @@ import com.github.ecsoya.bear.framework.web.domain.AjaxResult;
 /**
  * 全局异常处理器
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {

@@ -7,7 +7,7 @@ import com.github.ecsoya.bear.project.monitor.domain.SysJob;
 /**
  * 定时任务处理（允许并发执行）
  * 
- * @author ruoyi
+ * @author bearfast_ry
  *
  */
 public class QuartzJobExecution extends AbstractQuartzJob {

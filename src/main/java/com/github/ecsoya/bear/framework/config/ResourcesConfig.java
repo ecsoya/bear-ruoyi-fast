@@ -19,7 +19,7 @@ import com.github.ecsoya.bear.framework.interceptor.RepeatSubmitInterceptor;
 /**
  * 通用配置
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @Configuration
 public class ResourcesConfig implements WebMvcConfigurer {

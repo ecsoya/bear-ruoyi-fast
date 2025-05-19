@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
 /**
  * 通用http工具封装
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class HttpHelper {
 	private static final Logger LOGGER = LoggerFactory.getLogger(HttpHelper.class);

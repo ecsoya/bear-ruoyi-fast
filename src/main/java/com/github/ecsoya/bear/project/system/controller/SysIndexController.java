@@ -10,7 +10,7 @@ import com.github.ecsoya.bear.framework.config.GlobalConfig;
 /**
  * 首页
  *
- * @author ruoyi
+ * @author bearfast_ry
  */
 @RestController
 public class SysIndexController {

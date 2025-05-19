@@ -5,7 +5,7 @@ import com.github.ecsoya.bear.common.utils.StringUtils;
 /**
  * 路由显示信息
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class MetaVo {
 	/**

@@ -20,7 +20,7 @@ import com.github.ecsoya.bear.framework.config.GlobalConfig;
 /**
  * 文件上传工具类
  *
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class FileUploadUtils {
 	/**

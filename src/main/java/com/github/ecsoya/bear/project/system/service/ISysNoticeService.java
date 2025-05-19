@@ -7,7 +7,7 @@ import com.github.ecsoya.bear.project.system.domain.SysNotice;
 /**
  * 公告 服务层
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public interface ISysNoticeService {
 	/**

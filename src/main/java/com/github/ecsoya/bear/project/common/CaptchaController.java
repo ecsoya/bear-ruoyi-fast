@@ -26,7 +26,7 @@ import com.google.code.kaptcha.Producer;
 /**
  * 验证码操作处理
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @RestController
 public class CaptchaController {
@@ -40,7 +40,7 @@ public class CaptchaController {
 	private RedisCache redisCache;
 
 	// 验证码类型
-	@Value("${ruoyi.captchaType}")
+	@Value("${global.captchaType}")
 	private String captchaType;
 
 	@Autowired

@@ -92,7 +92,7 @@ import com.github.ecsoya.bear.framework.web.domain.AjaxResult;
 /**
  * Excel相关处理
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class ExcelUtil<T> {
 	private static final Logger log = LoggerFactory.getLogger(ExcelUtil.class);

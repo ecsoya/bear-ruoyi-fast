@@ -19,7 +19,7 @@ import com.github.ecsoya.bear.framework.web.domain.BaseEntity;
 /**
  * 定时任务调度表 sys_job
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class SysJob extends BaseEntity {
 	private static final long serialVersionUID = 1L;

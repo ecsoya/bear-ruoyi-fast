@@ -7,7 +7,7 @@ import com.github.ecsoya.bear.project.monitor.domain.SysJob;
 /**
  * 调度任务信息 数据层
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public interface SysJobMapper {
 	/**

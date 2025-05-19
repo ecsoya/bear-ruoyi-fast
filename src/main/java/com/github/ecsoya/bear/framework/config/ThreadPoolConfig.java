@@ -14,7 +14,7 @@ import com.github.ecsoya.bear.common.utils.Threads;
 /**
  * 线程池配置
  *
- * @author ruoyi
+ * @author bearfast_ry
  **/
 @Configuration
 public class ThreadPoolConfig {

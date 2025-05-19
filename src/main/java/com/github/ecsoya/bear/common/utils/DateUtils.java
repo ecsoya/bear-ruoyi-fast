@@ -15,7 +15,7 @@ import org.apache.commons.lang3.time.DateFormatUtils;
 /**
  * 时间工具类
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class DateUtils extends org.apache.commons.lang3.time.DateUtils {
 	public static String YYYY = "yyyy";

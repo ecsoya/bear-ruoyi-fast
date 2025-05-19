@@ -42,7 +42,7 @@ import com.github.ecsoya.bear.project.tool.gen.service.IGenTableService;
 /**
  * 代码生成 操作处理
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @RestController
 @RequestMapping("/tool/gen")

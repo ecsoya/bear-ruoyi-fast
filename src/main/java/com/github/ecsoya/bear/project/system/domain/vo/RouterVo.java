@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 /**
  * 路由配置信息
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class RouterVo {

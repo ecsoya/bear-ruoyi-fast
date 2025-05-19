@@ -23,7 +23,7 @@ import com.github.ecsoya.bear.framework.aspectj.lang.annotation.Anonymous;
 /**
  * 设置Anonymous注解允许匿名访问的url
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @Configuration
 public class PermitAllUrlProperties implements InitializingBean, ApplicationContextAware {

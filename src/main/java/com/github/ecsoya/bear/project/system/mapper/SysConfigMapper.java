@@ -7,7 +7,7 @@ import com.github.ecsoya.bear.project.system.domain.SysConfig;
 /**
  * 参数配置 数据层
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public interface SysConfigMapper {
 	/**

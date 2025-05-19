@@ -12,7 +12,7 @@ import com.github.ecsoya.bear.project.monitor.domain.SysJob;
 /**
  * 任务执行工具
  *
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class JobInvokeUtil {
 	/**

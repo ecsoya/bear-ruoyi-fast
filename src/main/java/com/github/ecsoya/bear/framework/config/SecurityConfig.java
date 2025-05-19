@@ -25,7 +25,7 @@ import com.github.ecsoya.bear.framework.security.handle.LogoutSuccessHandlerImpl
 /**
  * spring security配置
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @EnableMethodSecurity(prePostEnabled = true, securedEnabled = true)
 @Configuration

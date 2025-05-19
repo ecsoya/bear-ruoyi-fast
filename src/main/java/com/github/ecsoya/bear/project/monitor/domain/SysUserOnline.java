@@ -3,7 +3,7 @@ package com.github.ecsoya.bear.project.monitor.domain;
 /**
  * 当前在线会话
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class SysUserOnline {
 	/** 会话编号 */

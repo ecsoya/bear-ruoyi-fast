@@ -28,7 +28,7 @@ import com.github.ecsoya.bear.project.system.service.ISysUserOnlineService;
 /**
  * 在线用户监控
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @RestController
 @RequestMapping("/monitor/online")

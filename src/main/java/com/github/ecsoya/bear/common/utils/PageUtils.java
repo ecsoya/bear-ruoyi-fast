@@ -8,7 +8,7 @@ import com.github.pagehelper.PageHelper;
 /**
  * 分页工具类
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class PageUtils extends PageHelper {
 	/**

@@ -12,7 +12,7 @@ import com.github.ecsoya.bear.project.system.domain.SysDictData;
 /**
  * 字典工具类
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class DictUtils {
 	/**

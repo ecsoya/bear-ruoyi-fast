@@ -7,7 +7,7 @@ import com.github.ecsoya.bear.project.system.domain.SysDictData;
 /**
  * 字典 业务层
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public interface ISysDictDataService {
 	/**

@@ -24,7 +24,7 @@ import com.github.ecsoya.bear.project.system.service.ISysMenuService;
 /**
  * 登录验证
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @RestController
 public class SysLoginController {

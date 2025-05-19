@@ -33,7 +33,7 @@ import com.github.ecsoya.bear.project.monitor.service.ISysJobService;
 /**
  * 调度任务信息操作处理
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @RestController
 @RequestMapping("/monitor/job")

@@ -25,7 +25,7 @@ import com.github.ecsoya.bear.project.monitor.service.ISysOperLogService;
 /**
  * 操作日志记录
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @RestController
 @RequestMapping("/monitor/operlog")

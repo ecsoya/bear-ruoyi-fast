@@ -7,7 +7,7 @@ import com.github.ecsoya.bear.common.constant.HttpStatus;
 /**
  * 响应信息主体
  *
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class R<T> implements Serializable {
 	private static final long serialVersionUID = 1L;

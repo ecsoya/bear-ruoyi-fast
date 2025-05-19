@@ -3,7 +3,7 @@ package com.github.ecsoya.bear.framework.aspectj.lang.enums;
 /**
  * 业务操作类型
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public enum BusinessType {
 	/**

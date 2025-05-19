@@ -15,7 +15,7 @@ import com.github.ecsoya.bear.project.system.service.ISysConfigService;
 /**
  * 注册验证
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @RestController
 public class SysRegisterController extends BaseController {

@@ -18,7 +18,7 @@ import com.github.ecsoya.bear.project.system.service.ISysRoleService;
 /**
  * 用户权限处理
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @Component
 public class SysPermissionService {

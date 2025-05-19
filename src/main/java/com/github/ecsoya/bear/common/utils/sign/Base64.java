@@ -3,7 +3,7 @@ package com.github.ecsoya.bear.common.utils.sign;
 /**
  * Base64工具类
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public final class Base64 {
 	static private final int BASELENGTH = 128;

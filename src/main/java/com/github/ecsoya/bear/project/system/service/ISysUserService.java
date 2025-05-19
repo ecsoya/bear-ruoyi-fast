@@ -7,7 +7,7 @@ import com.github.ecsoya.bear.project.system.domain.SysUser;
 /**
  * 用户 业务层
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public interface ISysUserService {
 	/**

@@ -3,7 +3,7 @@ package com.github.ecsoya.bear.framework.aspectj.lang.enums;
 /**
  * 操作人类别
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public enum OperatorType {
 	/**

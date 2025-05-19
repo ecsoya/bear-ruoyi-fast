@@ -20,7 +20,7 @@ import com.github.ecsoya.bear.framework.datasource.DynamicDataSourceContextHolde
 /**
  * 多数据源处理
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @Aspect
 @Order(1)

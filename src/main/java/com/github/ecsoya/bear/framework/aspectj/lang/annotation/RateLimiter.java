@@ -12,7 +12,7 @@ import com.github.ecsoya.bear.framework.aspectj.lang.enums.LimitType;
 /**
  * 限流注解
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)

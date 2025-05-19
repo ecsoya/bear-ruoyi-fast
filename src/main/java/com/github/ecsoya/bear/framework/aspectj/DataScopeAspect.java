@@ -22,7 +22,7 @@ import com.github.ecsoya.bear.project.system.domain.SysUser;
 /**
  * 数据过滤处理
  *
- * @author ruoyi
+ * @author bearfast_ry
  */
 @Aspect
 @Component

@@ -3,7 +3,7 @@ package com.github.ecsoya.bear.common.exception;
 /**
  * 全局异常
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class GlobalException extends RuntimeException {
 	private static final long serialVersionUID = 1L;

@@ -5,7 +5,7 @@ import com.github.ecsoya.bear.common.utils.StringUtils;
 /**
  * 分页数据
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public class PageDomain {
 	/** 当前记录起始索引 */

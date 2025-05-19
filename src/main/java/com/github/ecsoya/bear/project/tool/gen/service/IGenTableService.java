@@ -8,7 +8,7 @@ import com.github.ecsoya.bear.project.tool.gen.domain.GenTable;
 /**
  * 业务 服务层
  * 
- * @author ruoyi
+ * @author bearfast_ry
  */
 public interface IGenTableService {
 	/**

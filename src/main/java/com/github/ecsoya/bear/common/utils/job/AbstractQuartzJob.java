@@ -20,7 +20,7 @@ import com.github.ecsoya.bear.project.monitor.service.ISysJobLogService;
 /**
  * 抽象quartz调用
  *
- * @author ruoyi
+ * @author bearfast_ry
  */
 public abstract class AbstractQuartzJob implements Job {
 	private static final Logger log = LoggerFactory.getLogger(AbstractQuartzJob.class);
