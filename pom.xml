@@ -5,7 +5,7 @@
 
     <groupId>com.github.ecsoya.bear</groupId>
     <artifactId>bear-ruoyi-fast</artifactId>
-    <version>v1.0.2</version>
+    <version>v1.0.3</version>
     <packaging>jar</packaging>
 
     <name>bear-ruoyi-fast</name>
@@ -114,7 +114,30 @@
             <groupId>com.github.pagehelper</groupId>
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>${pagehelper.spring.boot.starter.version}</version>
+            <exclusions>
+            	<exclusion>
+            		<groupId>org.mybatis.spring.boot</groupId>
+            		<artifactId>mybatis-spring-boot-starter</artifactId>
+            	</exclusion>
+            </exclusions>
         </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+       		<artifactId>mybatis-spring-boot-starter</artifactId>
+       		<version>${mybatis-spring-boot-starter.version}</version>
+       		<exclusions>
+       			<exclusion>
+       				<groupId>org.mybatis</groupId>
+       				<artifactId>mybatis-spring</artifactId>
+       			</exclusion>
+       		</exclusions>
+        </dependency>
+        <dependency>
+       		<groupId>org.mybatis</groupId>
+       		<artifactId>mybatis-spring</artifactId>
+       		<version>3.0.4</version>
+        </dependency>
+        
 
         <!-- 阿里数据库连接池 -->
         <dependency>
@@ -216,11 +239,6 @@
         </dependency>
 
         <!-- MyBatis Spring Boot Starter -->
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>${mybatis-spring-boot-starter.version}</version>
-        </dependency>
 
 	</dependencies>
 
