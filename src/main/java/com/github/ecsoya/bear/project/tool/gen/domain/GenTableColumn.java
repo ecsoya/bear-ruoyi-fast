@@ -1,6 +1,6 @@
 package com.github.ecsoya.bear.project.tool.gen.domain;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 import com.github.ecsoya.bear.common.utils.StringUtils;
 import com.github.ecsoya.bear.framework.web.domain.BaseEntity;

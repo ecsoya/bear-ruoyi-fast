@@ -3,7 +3,7 @@ package com.github.ecsoya.bear.framework.config;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.DispatcherType;
+import jakarta.servlet.DispatcherType;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

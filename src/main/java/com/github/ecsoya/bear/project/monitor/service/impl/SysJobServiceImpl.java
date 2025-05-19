@@ -2,7 +2,7 @@ package com.github.ecsoya.bear.project.monitor.service.impl;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 
 import org.quartz.JobDataMap;
 import org.quartz.JobKey;

@@ -1,6 +1,6 @@
 package com.github.ecsoya.bear.framework.security.service;
 
-import javax.annotation.Resource;
+import jakarta.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;

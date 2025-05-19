@@ -14,104 +14,83 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.github.ecsoya.bear.common.utils.StringUtils;
-import com.github.ecsoya.bear.framework.web.controller.BaseController;
-import com.github.ecsoya.bear.framework.web.domain.R;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 /**
- * swagger 用户测试方法
+ * swagger 测试
  * 
  * @author bearfast_ry
  */
-@Api("用户信息管理")
+@Tag(name = "测试接口")
 @RestController
-@RequestMapping("/test/user")
-public class TestController extends BaseController {
+@RequestMapping("/test")
+public class TestController {
 	private final static Map<Integer, UserEntity> users = new LinkedHashMap<Integer, UserEntity>();
+
 	{
 		users.put(1, new UserEntity(1, "admin", "admin123", "15888888888"));
 		users.put(2, new UserEntity(2, "ry", "admin123", "15666666666"));
 	}
 
-	@ApiOperation("获取用户列表")
+	@Operation(summary = "获取用户列表")
 	@GetMapping("/list")
-	public R<List<UserEntity>> userList() {
+	public List<UserEntity> userList() {
 		List<UserEntity> userList = new ArrayList<UserEntity>(users.values());
-		return R.ok(userList);
+		return userList;
 	}
 
-	@ApiOperation("获取用户详细")
-	@ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "int", paramType = "path", dataTypeClass = Integer.class)
+	@Operation(summary = "获取用户详细")
+	@Parameter(name = "userId", description = "用户ID", required = true)
 	@GetMapping("/{userId}")
-	public R<UserEntity> getUser(@PathVariable Integer userId) {
-		if (!users.isEmpty() && users.containsKey(userId)) {
-			return R.ok(users.get(userId));
-		} else {
-			return R.fail("用户不存在");
-		}
+	public UserEntity getUser(@PathVariable Integer userId) {
+		return users.get(userId);
 	}
 
-	@ApiOperation("新增用户")
-	@ApiImplicitParams({
-			@ApiImplicitParam(name = "userId", value = "用户id", dataType = "Integer", dataTypeClass = Integer.class),
-			@ApiImplicitParam(name = "username", value = "用户名称", dataType = "String", dataTypeClass = String.class),
-			@ApiImplicitParam(name = "password", value = "用户密码", dataType = "String", dataTypeClass = String.class),
-			@ApiImplicitParam(name = "mobile", value = "用户手机", dataType = "String", dataTypeClass = String.class) })
+	@Operation(summary = "新增用户")
+	@Parameters({
+		@Parameter(name = "userId", description = "用户ID", required = true),
+		@Parameter(name = "username", description = "用户名称", required = true),
+		@Parameter(name = "password", description = "用户密码", required = true),
+		@Parameter(name = "mobile", description = "用户手机", required = true)
+	})
 	@PostMapping("/save")
-	public R<String> save(UserEntity user) {
-		if (StringUtils.isNull(user) || StringUtils.isNull(user.getUserId())) {
-			return R.fail("用户ID不能为空");
-		}
+	public String save(UserEntity user) {
 		users.put(user.getUserId(), user);
-		return R.ok();
+		return "success";
 	}
 
-	@ApiOperation("更新用户")
+	@Operation(summary = "修改用户")
 	@PutMapping("/update")
-	public R<String> update(@RequestBody UserEntity user) {
-		if (StringUtils.isNull(user) || StringUtils.isNull(user.getUserId())) {
-			return R.fail("用户ID不能为空");
-		}
-		if (users.isEmpty() || !users.containsKey(user.getUserId())) {
-			return R.fail("用户不存在");
-		}
-		users.remove(user.getUserId());
+	public String update(@RequestBody UserEntity user) {
 		users.put(user.getUserId(), user);
-		return R.ok();
+		return "success";
 	}
 
-	@ApiOperation("删除用户信息")
-	@ApiImplicitParam(name = "userId", value = "用户ID", required = true, dataType = "int", paramType = "path", dataTypeClass = Integer.class)
+	@Operation(summary = "删除用户")
+	@Parameter(name = "userId", description = "用户ID", required = true)
 	@DeleteMapping("/{userId}")
-	public R<String> delete(@PathVariable Integer userId) {
-		if (!users.isEmpty() && users.containsKey(userId)) {
-			users.remove(userId);
-			return R.ok();
-		} else {
-			return R.fail("用户不存在");
-		}
+	public String delete(@PathVariable Integer userId) {
+		users.remove(userId);
+		return "success";
 	}
 }
 
-@ApiModel(value = "UserEntity", description = "用户实体")
+@Schema(description = "用户实体")
 class UserEntity {
-	@ApiModelProperty("用户ID")
+	@Schema(description = "用户ID")
 	private Integer userId;
 
-	@ApiModelProperty("用户名称")
+	@Schema(description = "用户名称")
 	private String username;
 
-	@ApiModelProperty("用户密码")
+	@Schema(description = "用户密码")
 	private String password;
 
-	@ApiModelProperty("用户手机")
+	@Schema(description = "用户手机")
 	private String mobile;
 
 	public UserEntity() {

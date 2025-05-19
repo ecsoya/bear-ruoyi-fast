@@ -168,7 +168,7 @@ public class Constants {
 	/**
 	 * 定时任务违规的字符
 	 */
-	public static final String[] JOB_ERROR_STR = { "java.net.URL", "javax.naming.InitialContext", "org.yaml.snakeyaml",
+	public static final String[] JOB_ERROR_STR = { "java.net.URL", "jakarta.naming.InitialContext", "org.yaml.snakeyaml",
 			"org.springframework", "org.apache", "com.github.ecsoya.bear.common.utils.file", "com.github.ecsoya.bear.framework.config",
 			"com.github.ecsoya.bear.project.tool" };
 }
