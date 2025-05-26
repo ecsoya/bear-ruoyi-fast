@@ -1,11 +1,8 @@
 package com.github.ecsoya.bear.framework.security.service;
 
-import java.security.KeyPair;
-import java.security.KeyPairGenerator;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -14,13 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.oauth2.jwt.Jwt;
-import org.springframework.security.oauth2.jwt.JwtClaimsSet;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.stereotype.Component;
 
 import com.github.ecsoya.bear.common.constant.CacheConstants;
@@ -32,14 +22,13 @@ import com.github.ecsoya.bear.common.utils.ip.IpUtils;
 import com.github.ecsoya.bear.common.utils.uuid.IdUtils;
 import com.github.ecsoya.bear.framework.redis.RedisCache;
 import com.github.ecsoya.bear.framework.security.LoginUser;
-import com.nimbusds.jose.jwk.JWK;
-import com.nimbusds.jose.jwk.JWKSet;
-import com.nimbusds.jose.jwk.RSAKey;
-import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
-import com.nimbusds.jose.jwk.source.JWKSource;
-import com.nimbusds.jose.proc.SecurityContext;
 
 import eu.bitwalker.useragentutils.UserAgent;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 
 /**
@@ -59,6 +48,10 @@ public class TokenService {
 	@Value("${token.expireTime}")
 	private int expireTime;
 
+	// 令牌密钥
+	@Value("${token.secret}")
+	private String secret;
+
 	protected static final long MILLIS_SECOND = 1000;
 
 	protected static final long MILLIS_MINUTE = 60 * MILLIS_SECOND;
@@ -68,32 +61,17 @@ public class TokenService {
 	@Autowired
 	private RedisCache redisCache;
 
-	private final JwtEncoder jwtEncoder;
-	private final JwtDecoder jwtDecoder;
+	private byte[] keyBytes;
 
-	public TokenService() {
-		// 生成RSA密钥对
-		KeyPair keyPair = generateRsaKey();
-		RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
-		RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
-
-		// 创建JWK
-		JWK jwk = new RSAKey.Builder(publicKey).privateKey(privateKey).build();
-		JWKSet jwkSet = new JWKSet(jwk);
-		JWKSource<SecurityContext> jwkSource = new ImmutableJWKSet<>(jwkSet);
-
-		// 创建JWT编码器和解码器
-		this.jwtEncoder = new NimbusJwtEncoder(jwkSource);
-		this.jwtDecoder = NimbusJwtDecoder.withPublicKey(publicKey).build();
-	}
-
-	private KeyPair generateRsaKey() {
-		try {
-			KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
-			keyPairGenerator.initialize(2048);
-			return keyPairGenerator.generateKeyPair();
-		} catch (Exception ex) {
-			throw new IllegalStateException("Error generating RSA key pair", ex);
+	@PostConstruct
+	public void initJwtCodec() {
+		// 确保密钥长度至少为256位（32字节）
+		byte[] secretBytes = secret.getBytes(java.nio.charset.StandardCharsets.UTF_8);
+		if (secretBytes.length < 32) {
+			keyBytes = new byte[32];
+			System.arraycopy(secretBytes, 0, keyBytes, 0, Math.min(secretBytes.length, 32));
+		} else {
+			keyBytes = secretBytes;
 		}
 	}
 
@@ -107,15 +85,15 @@ public class TokenService {
 		String token = getToken(request);
 		if (StringUtils.isNotEmpty(token)) {
 			try {
-				Jwt jwt = jwtDecoder.decode(token);
+				Claims claims = parseToken(token);
 				// 解析对应的权限以及用户信息
-				String uuid = jwt.getClaimAsString(Constants.LOGIN_USER_KEY);
+				String uuid = claims.get(Constants.LOGIN_USER_KEY, String.class);
 				String userKey = getTokenKey(uuid);
 				LoginUser user = redisCache.getCacheObject(userKey);
 				if (user != null) {
 					// 验证token是否过期
-					Instant expiresAt = jwt.getExpiresAt();
-					if (expiresAt != null && expiresAt.isBefore(Instant.now())) {
+					Date expiration = claims.getExpiration();
+					if (expiration != null && expiration.before(new Date())) {
 						log.warn("Token已过期: {}", token);
 						return null;
 					}
@@ -143,8 +121,8 @@ public class TokenService {
 	public void delLoginUser(String token) {
 		if (StringUtils.isNotEmpty(token)) {
 			try {
-				Jwt jwt = jwtDecoder.decode(token);
-				String uuid = jwt.getClaimAsString(Constants.LOGIN_USER_KEY);
+				Claims claims = parseToken(token);
+				String uuid = claims.get(Constants.LOGIN_USER_KEY, String.class);
 				if (uuid != null) {
 					String userKey = getTokenKey(uuid);
 					redisCache.deleteObject(userKey);
@@ -167,18 +145,21 @@ public class TokenService {
 		setUserAgent(loginUser);
 		refreshToken(loginUser);
 
-		Instant now = Instant.now();
-		Instant expiryDate = now.plus(expireTime, ChronoUnit.MINUTES);
+		Date now = new Date();
+		Date expiryDate = new Date(now.getTime() + expireTime * MILLIS_MINUTE);
 
 		Map<String, Object> claims = new HashMap<>();
 		claims.put(Constants.LOGIN_USER_KEY, token);
 		claims.put(Constants.JWT_USERNAME, loginUser.getUsername());
 		claims.put(Constants.JWT_USERID, loginUser.getUserId());
 
-		JwtClaimsSet claimsSet = JwtClaimsSet.builder().subject(loginUser.getUsername()).claims(c -> c.putAll(claims))
-				.issuedAt(now).expiresAt(expiryDate).build();
-
-		return jwtEncoder.encode(JwtEncoderParameters.from(claimsSet)).getTokenValue();
+		return Jwts.builder()
+				.setClaims(claims)
+				.setSubject(loginUser.getUsername())
+				.setIssuedAt(now)
+				.setExpiration(expiryDate)
+				.signWith(Keys.hmacShaKeyFor(keyBytes), SignatureAlgorithm.HS256)
+				.compact();
 	}
 
 	/**
@@ -247,12 +228,23 @@ public class TokenService {
 	 */
 	public String getUsernameFromToken(String token) {
 		try {
-			Jwt jwt = jwtDecoder.decode(token);
-			return jwt.getSubject();
+			Claims claims = parseToken(token);
+			return claims.getSubject();
 		} catch (Exception e) {
 			log.error("从令牌中获取用户名异常: {}", e.getMessage());
 			return null;
 		}
+	}
+
+	/**
+	 * 解析令牌
+	 */
+	private Claims parseToken(String token) {
+		return Jwts.parserBuilder()
+				.setSigningKey(Keys.hmacShaKeyFor(keyBytes))
+				.build()
+				.parseClaimsJws(token)
+				.getBody();
 	}
 
 	/**
