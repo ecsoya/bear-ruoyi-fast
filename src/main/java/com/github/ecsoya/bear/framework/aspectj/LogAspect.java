@@ -3,9 +3,6 @@ package com.github.ecsoya.bear.framework.aspectj;
 import java.util.Collection;
 import java.util.Map;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-
 import org.apache.commons.lang3.ArrayUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
@@ -35,6 +32,9 @@ import com.github.ecsoya.bear.framework.manager.factory.AsyncFactory;
 import com.github.ecsoya.bear.framework.security.LoginUser;
 import com.github.ecsoya.bear.project.monitor.domain.SysOperLog;
 import com.github.ecsoya.bear.project.system.domain.SysUser;
+
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 /**
  * 操作日志记录处理
@@ -84,7 +84,7 @@ public class LogAspect {
 	protected void handleLog(final JoinPoint joinPoint, Log controllerLog, final Exception e, Object jsonResult) {
 		try {
 			// 获取当前的用户
-			LoginUser loginUser = SecurityUtils.getLoginUser();
+			LoginUser loginUser = getLoginUser();
 
 			// *========数据库日志=========*//
 			SysOperLog operLog = new SysOperLog();
@@ -125,6 +125,19 @@ public class LogAspect {
 		} finally {
 			TIME_THREADLOCAL.remove();
 		}
+	}
+
+	private LoginUser getLoginUser() {
+		LoginUser loginUser = null;
+		try {
+			loginUser = SecurityUtils.getLoginUser();
+		} catch (Exception e) {
+			loginUser = new LoginUser();
+			SysUser user = new SysUser();
+			user.setUserName("anonymous");
+			loginUser.setUser(user);
+		}
+		return loginUser;
 	}
 
 	/**
