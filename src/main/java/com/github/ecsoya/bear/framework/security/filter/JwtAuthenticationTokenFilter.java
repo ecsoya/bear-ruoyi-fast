@@ -1,6 +1,7 @@
 package com.github.ecsoya.bear.framework.security.filter;
 
 import java.io.IOException;
+import java.util.Date;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -37,14 +38,25 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
 		try {
+			log.debug("JWT过滤器开始处理请求: {}", request.getRequestURI());
 			LoginUser loginUser = tokenService.getLoginUser(request);
-			if (StringUtils.isNotNull(loginUser) && StringUtils.isNull(SecurityUtils.getAuthentication())) {
-				tokenService.verifyToken(loginUser);
-				UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser,
-						null, loginUser.getAuthorities());
-				authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-				SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-				log.debug("用户 {} 已通过token认证", loginUser.getUsername());
+			if (StringUtils.isNotNull(loginUser)) {
+				log.debug("找到有效的登录用户: {}, 过期时间: {}", 
+						loginUser.getUsername(), 
+						new Date(loginUser.getExpireTime()));
+						
+				if (StringUtils.isNull(SecurityUtils.getAuthentication())) {
+					tokenService.verifyToken(loginUser);
+					UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(loginUser,
+							null, loginUser.getAuthorities());
+					authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+					SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+					log.debug("用户 {} 已通过token认证并更新SecurityContext", loginUser.getUsername());
+				} else {
+					log.debug("用户 {} 已有认证信息，无需重新认证", loginUser.getUsername());
+				}
+			} else {
+				log.debug("未找到有效的登录用户或token");
 			}
 		} catch (Exception e) {
 			log.error("token认证失败: {}", e.getMessage());
